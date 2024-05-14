@@ -1,0 +1,54 @@
+in terminal in ubuntu 18, copy the following command and paste :
+
+sudo apt update
+
+sudo apt install lsb-release -y
+
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+sudo apt install curl gnupg -y
+
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+sudo apt-get update -y
+
+sudo apt-get install git python-rosinstall ros-melodic-desktop-full python-catkin-tools ros-melodic-joint-state-controller ros-melodic-twist-mux ros-melodic-ompl ros-melodic-controller-manager ros-melodic-moveit-core ros-melodic-moveit-ros-perception ros-melodic-moveit-ros-move-group ros-melodic-moveit-kinematics ros-melodic-moveit-ros-planning-interface ros-melodic-moveit-simple-controller-manager ros-melodic-moveit-planners-ompl ros-melodic-joy ros-melodic-joy-teleop ros-melodic-teleop-tools ros-melodic-control-toolbox ros-melodic-sound-play ros-melodic-navigation ros-melodic-depthimage-to-laserscan ros-melodic-moveit-commander -y
+
+source /opt/ros/melodic/setup.bash
+
+mkdir ~/tiago_public_ws
+
+cd ~/tiago_public_ws
+
+wget https://raw.githubusercontent.com/pal-robotics/tiago_tutorials/noetic-devel/tiago_public-noetic.rosinstall  https://raw.githubusercontent.com/pal-robotics/tiago_tutorials/kinetic-devel/tiago_public-melodic.rosinstall
+
+
+rosinstall src /opt/ros/melodic tiago_public-noetic.rosinstall
+
+rosinstall src /opt/ros/melodic tiago_public-melodic.rosinstall
+
+source ~/tiago_public_ws/src/setup.bash
+
+echo "source ~/tiago_public_ws/src/setup.bash" >> ~/.bashrc
+
+sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
+
+sudo rosdep init
+
+rosdep update --include-eol-distros
+
+rosdep install --from-paths src --ignore-src -y --rosdistro melodic --skip-keys="opencv2 opencv2-nonfree pal_laser_filters speed_limit_node sensor_to_cloud hokuyo_node libdw-dev python-graphitesend-pip python-statsd pal_filters pal_vo_server pal_usb_utils pal_pcl pal_pcl_points_throttle_and_filter pal_karto pal_local_joint_control camera_calibration_files pal_startup_msgs pal-orbbec-openni2 dummy_actuators_manager pal_local_planner gravity_compensation_controller current_limit_controller dynamic_footprint dynamixel_cpp tf_lookup opencv3 joint_impedance_trajectory_controller cartesian_impedance_controller omni_base_description omni_drive_controller pal_moveit_capabilities pal_moveit_plugins pal_loc_measure pal_map_manager ydlidar_ros_driver"
+
+source ~/.bashrc
+
+catkin build -DCATKIN_ENABLE_TESTING=0 -j $(expr `nproc` / 2)
+
+
+
+
+
+
+
+
+
+
