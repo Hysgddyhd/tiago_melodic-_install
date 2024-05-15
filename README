@@ -1,4 +1,4 @@
-in terminal in ubuntu 18, copy the following command and paste :
+open terminal in ubuntu 18, copy and paste the following command:
 
 sudo apt update
 
@@ -43,7 +43,7 @@ source ~/.bashrc
 
 catkin build -DCATKIN_ENABLE_TESTING=0 -j $(expr `nproc` / 2)
 
-source ./devel/setup.bash
+source ./devel/setup.bash  #test 
 
 roslaunch tiago_gazebo tiago_gazebo.launch public_sim:=true world:=simple_office_with_people
 
